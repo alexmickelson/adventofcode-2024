@@ -21,7 +21,7 @@ pub fn parse_levels(input: &str) -> Vec<Vec<i32>> {
     levels
 }
 
-pub fn level_is_safe(input: Vec<i32>) -> bool {
+pub fn level_is_safe(input: &Vec<i32>) -> bool {
     let mut prev = input[0];
 
     let is_incrementing = is_incrementing(&input);
@@ -44,6 +44,33 @@ pub fn level_is_safe(input: Vec<i32>) -> bool {
     }
 
     true
+}
+
+pub fn level_is_safe_with_dampener(input: &Vec<i32>) -> bool {
+    let is_safe = level_is_safe(input);
+
+    if is_safe {
+        return true;
+    }
+
+    let length = input.len();
+
+    let permutations: Vec<Vec<i32>> = (0..length)
+        .map(|index| {
+            let before = input[0..index].to_vec();
+            let after = input[index + 1..].to_vec();
+
+            [before, after].concat()
+        })
+        .collect();
+
+    for perm in permutations {
+        if level_is_safe(&perm) {
+            return true;
+        }
+    }
+
+    false
 }
 
 fn is_incrementing(input: &Vec<i32>) -> bool {

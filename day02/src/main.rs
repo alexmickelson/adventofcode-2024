@@ -10,9 +10,14 @@ fn main() {
     let input = read_file_from_path("./input.txt");
     let levels = parse_levels(&input);
 
+    // let safe_levels = levels
+    //   .iter()
+    //   .filter(|&l| level_is_safe(l))
+    //   .count();
+    // println!("safe levels: {}", safe_levels)
     let safe_levels = levels
       .iter()
-      .filter(|&l| level_is_safe(l.to_vec()))
+      .filter(|&l| level_is_safe_with_dampener(l))
       .count();
     println!("safe levels: {}", safe_levels)
 }
