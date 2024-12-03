@@ -14,7 +14,7 @@ Install the following VSCode Extensions: `rust-lang.rust-analyzer`, `Swellaby.vs
 
 ## daily setup
 
-`cargo new day1 --lib`
+`cargo new day01 --lib`
 
 - move tests to new file
 - make a main.rs with `use dayXX::*` at the top to import library code
