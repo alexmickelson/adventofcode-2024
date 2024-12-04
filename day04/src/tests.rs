@@ -2,6 +2,16 @@ use super::*;
 
 #[test]
 fn it_works() {
-    let result = add(2, 2);
-    assert_eq!(result, 4);
+  let input = "MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX";
+  let matches = count_xmas(input);
+  assert_eq!(matches, 18);
 }
