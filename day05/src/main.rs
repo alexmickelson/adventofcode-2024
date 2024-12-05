@@ -7,8 +7,9 @@ fn main() {
 
     let correct_pages = page_numbers
         .iter()
-        .filter(|p| passes_rules(p.to_vec(), &rules))
-        .collect::<Vec<&Vec<usize>>>();
+        .filter(|p| !passes_rules(p.to_vec(), &rules))
+        .map(|p| correct_bad_rule(p.to_vec(), &rules))
+        .collect::<Vec<Vec<usize>>>();
 
     let middle_values = correct_pages
         .iter()

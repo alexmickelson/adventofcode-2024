@@ -53,5 +53,28 @@ pub fn passes_rules(page_numbers: Vec<usize>, rules: &Vec<(usize, usize)>) -> bo
     true
 }
 
+pub fn correct_bad_rule(page_numbers: Vec<usize>, rules: &Vec<(usize, usize)>) -> Vec<usize> {
+    let mut changing_numbers = page_numbers.clone();
+    while !passes_rules(changing_numbers.clone(), rules) {
+        for rule in rules {
+            let (first, second) = rule;
+            let first_index = changing_numbers.iter().position(|v| v == first);
+            let second_index = changing_numbers.iter().position(|v| v == second);
+
+            if let (Some(first_index), Some(second_index)) = (first_index, second_index) {
+                if first_index > second_index {
+                    let first_value = changing_numbers
+                        .get(first_index)
+                        .cloned()
+                        .expect("should have found value");
+                    changing_numbers.remove(first_index);
+                    changing_numbers.insert(second_index, first_value);
+                }
+            }
+        }
+    }
+    changing_numbers
+}
+
 #[cfg(test)]
 mod tests;
