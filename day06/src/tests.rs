@@ -1,0 +1,93 @@
+use super::*;
+
+#[test]
+fn it_works() {
+    let input = "....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...";
+    let grid = parse_map(input);
+
+    let result = trace_guards_path(&grid);
+
+    let count = count_path(&result);
+    assert_eq!(count, 41);
+}
+
+#[test]
+fn count_obstacles() {
+    let input = "....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...";
+    let grid = parse_map(input);
+
+    let count = count_paths(&grid);
+
+    assert_eq!(count, 6);
+}
+
+#[test]
+fn test_can_detect_down_cycle() {
+    let input = "....#.....
+....+---+#
+....|...|.
+..#.|...|.
+..+-+-+#|.
+..|.|.|.|.
+.#+---+-+.
+........#.
+#.........
+......#...";
+    let grid = parse_map(input);
+    let guard_grid = parse_map("....#.....
+....+---+#
+....|...|.
+..#.|...|.
+..+-+-+#|.
+..|.|.|.|.
+.#+---v-+.
+........#.
+#.........
+......#...");
+    let is_cycle = next_obstacle_is_cycle(&grid, &guard_grid);
+    assert_eq!(is_cycle, true);
+}
+
+#[test]
+fn no_false_positives(){
+  let grid = parse_map( "....#.....
+....|....#
+....|.....
+..#.|.....
+....|..#..
+....|.....
+.#.......
+........#.
+#.........
+......#...");
+  let guard_grid = parse_map("....#.....
+....>....#
+....|.....
+..#.|.....
+....|..#..
+....|.....
+.#..|.....
+........#.
+#.........
+......#...");
+  let is_cycle = next_obstacle_is_cycle(&grid, &guard_grid);
+  assert_eq!(is_cycle, false);
+}
